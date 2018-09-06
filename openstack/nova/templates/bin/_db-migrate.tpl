@@ -16,3 +16,19 @@ set -x
 nova-manage --config-dir /etc/nova db sync
 nova-manage --config-dir /etc/nova api_db sync
 #nova-manage --config-dir /etc/nova db online_data_migrations
+
+# Create Cell0 in the API database
+nova-manage cell_v2 map_cell0
+nova-manage db sync
+
+{{range .Values.cells }}
+{{- if .enabled }}
+{{- $cell := . }}
+{{- with $ }}
+nova-manage cell_v2 create_cell --name nova-cell-{{$cell.name}} --transport-url {{ tuple . $cell .Values.rabbitmq.users.default.user ( .Values.rabbitmq.users.default.password | default (tuple . .Values.rabbitmq.users.default.user | include "rabbitmq.password_for_user")) (.Values.rabbitmq.port | default 5672) (.Values.rabbitmq.virtual_host | default "/") | include "cell_rabbit_url" }} --database-connection {{ tuple . $cell .Values.postgresql.user .Values.postgresql.postgresPassword | include "cell_db_url" }} --verbose
+{{- end }}
+{{- end }}
+{{ end }}
+
+nova-manage cell_v2 discover_hosts
+
