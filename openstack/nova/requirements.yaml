@@ -19,3 +19,13 @@ dependencies:
     condition: openstack.nova.audit.enabled
     repository: file://../../common/rabbitmq
     version: 0.1.0
+  - name: rabbitmq
+    alias: rabbitmq-cell-a
+    condition: openstack.nova.cell.a.enabled
+    repository: file://../../common/rabbitmq
+    version: 0.1.0
+  - name: rabbitmq
+    alias: rabbitmq-cell-b
+    condition: openstack.nova.cell.b.enabled
+    repository: file://../../common/rabbitmq
+    version: 0.1.0

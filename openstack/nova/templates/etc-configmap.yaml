@@ -36,3 +36,9 @@ data:
   watcher.yaml: |
 {{ include (print .Template.BasePath "/etc/_watcher.yaml.tpl") . | indent 4 }}
 {{- end }}
+{{- range .Values.cells -}}
+{{- if .enabled }}
+  nova-cell-{{.name}}.conf: |
+{{- tuple $ . | include "nova_cell_conf" | indent 4 }}
+{{ end -}}
+{{- end -}}

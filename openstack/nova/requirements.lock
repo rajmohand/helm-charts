@@ -17,5 +17,11 @@ dependencies:
 - name: rabbitmq
   repository: file://../../common/rabbitmq
   version: 0.1.0
-digest: sha256:9537068a0afa4d4513a0b6d0f3621143084f5fc785d730d3e64125b1e155d546
-generated: 2018-09-05T09:17:14.305133597+02:00
+- name: rabbitmq
+  repository: file://../../common/rabbitmq
+  version: 0.1.0
+- name: rabbitmq
+  repository: file://../../common/rabbitmq
+  version: 0.1.0
+digest: sha256:f3115fcdc356cdfa5e8ae07cdc222f2416c797eae8906e25e4dad59273bd1fa1
+generated: 2018-09-05T18:25:52.223515527+02:00

@@ -23,6 +23,11 @@ global:
 
 osprofiler: {}
 
+# Nova cells
+cells:
+  a: false
+  b: false
+
 pod:
   replicas:
     api: 2
