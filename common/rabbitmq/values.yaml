@@ -8,16 +8,19 @@ global:
   master_password: ""
 
 image: rabbitmq
-imageTag: 3.6-management
+imageTag: 3.7-management
 ## Specify a imagePullPolicy
 ## 'Always' if imageTag is 'latest', else set to 'IfNotPresent'
 ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
 ##
 # imagePullPolicy:
 
+
 ports:
   public: 5672
   management: 15672
+  clustering: 25672
+  epmd: 4369
 
 users:
   default:
@@ -46,7 +49,7 @@ resources:
 metrics:
   enabled: true
   image: kbudde/rabbitmq-exporter
-  imageTag: 0.16.0
+  imageTag: v0.28.0
   user: monitoring
   password: null
   port: 9150
@@ -59,11 +62,15 @@ metrics:
       memory: 128Mi
       cpu: 500m
 
+plugins:
+  - rabbitmq_management
+  - rabbitmq_tracing
+  - rabbitmq_peer_discovery_k8s
+
 replicas: 1
+erlangCookie: "DefaultErlangSecretCookie"
+hipe_compile: "true"
 
 upgrades:
+  updateStrategy: RollingUpdate
   revisionHistory: 3
-  podReplacementStrategy: Recreate
-#  rollingUpdate:
-#    maxUnavailable: 1
-#    maxSurge: 3
