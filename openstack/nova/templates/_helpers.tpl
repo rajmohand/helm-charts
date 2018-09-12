@@ -51,7 +51,7 @@ rabbit://{{$user}}:{{$password | urlquery}}@{{$rabbitmq_host}}:{{$port}}{{$virtu
 # use cell specific rabbitmq
 transport_url = {{ tuple . $cell .Values.rabbitmq.users.default.user ( .Values.rabbitmq.users.default.password | default (tuple . .Values.rabbitmq.users.default.user | include "rabbitmq.password_for_user")) (.Values.rabbitmq.port | default 5672) (.Values.rabbitmq.virtual_host | default "/") | include "cell_rabbit_url" }}
 
-[api_database]
+[database]
 connection = {{ tuple . $cell .Values.postgresql.user .Values.postgresql.postgresPassword | include "cell_db_url" }}
 {{- end -}}
 {{- end -}}
